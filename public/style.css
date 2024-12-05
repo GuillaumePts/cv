@@ -4,7 +4,30 @@
     padding: 0;
     font-family: "Rubik", sans-serif;
     color: #333;
-    transition: 0.3s ease-out;
+    transition: 0.2s ease-out;
+}
+
+
+.anime {
+    animation: tel 0.2s forwards linear; /* Animation continue sans fin */
+}
+
+@keyframes tel {
+    0% {
+        transform: rotate(0deg);  /* Initialisation de l'élément */
+    }
+    25% {
+        transform: rotate(30deg);   /* Au milieu de l'animation */
+    }
+    50%{
+        transform: rotate(0deg);
+    }
+    75%{
+        transform: rotate(-30deg);
+    }
+    100% {
+        transform: rotate(0deg);   /* Fin de l'animation */
+    }
 }
 
 
@@ -17,7 +40,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    height: 120vh;
     position: relative;
 }
 
@@ -30,16 +53,12 @@ body{
         "footer main";
     grid-template-columns: 90px 1fr; 
     grid-template-rows: 80px auto; 
-    /* gap: 5px;  */
     width: 100%;
     max-width: 550px;
-    transform-style: preserve-3d;
-    perspective: 200px;
     position: absolute;
+    transform: translate(-50%, -50%);
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    
 }
 
 header {
@@ -193,6 +212,7 @@ main #experiencesEnDev .xp .resume:hover{
     transform: scale(1.4);
     z-index: 2;
     box-shadow: 0px 0px 20px 0px #00000085;
+    background-color: #fff;
 }
 
 

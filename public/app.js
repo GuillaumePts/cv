@@ -26,6 +26,21 @@ window.addEventListener('deviceorientation', (event) => {
     animatedDiv.style.transform = `translate(-50%, -50%) translateX(${transX}px) translateY(${transY}px) translateZ(${transZ}px)`;
 });
 
+// ---------------------------------------------------------
+// appel
+const phoneDiv = document.querySelector('#phone');
+const tel = document.querySelector('#tel');
+
+phoneDiv.addEventListener('click', () => {
+    window.location.href = 'tel:0777770667';  // Remplacez le numéro par le vôtre ou laissez-le vide
+});
+
+setInterval(() => {
+    tel.classList.toggle('anime')
+},1000);
+
+
+
 
 
 
