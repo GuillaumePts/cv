@@ -9,6 +9,16 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+app.get('/download', (req, res) => {
+  const filePath = path.join(__dirname, 'diplome.pdf');
+  res.download(filePath, 'diplome.pdf', (err) => {
+      if (err) {
+          console.error('Erreur lors du téléchargement :', err);
+          res.status(500).send('Erreur lors du téléchargement.');
+      }
+  });
+});
+
 
 // Démarrer le serveur
 app.listen(port, () => {

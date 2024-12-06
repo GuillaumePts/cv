@@ -27,17 +27,36 @@ window.addEventListener('deviceorientation', (event) => {
 });
 
 // ---------------------------------------------------------
-// appel
+//anime logo + tel et mail
+
 const phoneDiv = document.querySelector('#phone');
+const mailDiv = document.querySelector('#mail');
 const tel = document.querySelector('#tel');
+const mail = document.querySelector('#lemail');
 
 phoneDiv.addEventListener('click', () => {
-    window.location.href = 'tel:0777770667';  // Remplacez le numéro par le vôtre ou laissez-le vide
+    window.location.href = 'tel:0777770667';  
+});
+
+const recipient = 'guillaume.pitois@proton.me'; 
+mailDiv.addEventListener('click', () => {
+    const subject = 'Rendez-vous';
+    const body = '';
+    
+    // Construire le lien mailto
+    const mailtoLink = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    
+    // Redirection
+    window.location.href = mailtoLink;
 });
 
 setInterval(() => {
     tel.classList.toggle('anime')
+    mail.classList.toggle('anime')
 },1000);
+
+
+
 
 
 

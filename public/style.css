@@ -9,15 +9,15 @@
 
 
 .anime {
-    animation: tel 0.2s forwards linear; /* Animation continue sans fin */
+    animation: tel 0.2s forwards linear; 
 }
 
 @keyframes tel {
     0% {
-        transform: rotate(0deg);  /* Initialisation de l'élément */
+        transform: rotate(0deg);  
     }
     25% {
-        transform: rotate(30deg);   /* Au milieu de l'animation */
+        transform: rotate(30deg);   
     }
     50%{
         transform: rotate(0deg);
@@ -26,7 +26,7 @@
         transform: rotate(-30deg);
     }
     100% {
-        transform: rotate(0deg);   /* Fin de l'animation */
+        transform: rotate(0deg);  
     }
 }
 
@@ -65,14 +65,24 @@ header {
     grid-area: header;
     background: rgba(255, 255, 255, 0.16);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(9.3px);
-    -webkit-backdrop-filter: blur(9.3px);
     position: relative;
     display: flex;
     justify-content: end;
     align-items: center;
     z-index: 1;
-    /* box-shadow: 8px 8px 20px #0000004d; */
+
+}
+
+header::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(9.3px);
+    -webkit-backdrop-filter: blur(9.3px);
+    z-index: 0;
 }
 
 header img{
@@ -135,10 +145,11 @@ main #diplomes{
     width: 80%;
 }
 
-main #diplomes div span{
+main #diplomes div #rncp{
     width: 100%;
     color: #333;
     text-align: center;
+    text-decoration: none;
 }
 
 main #experiencesEnDev{
@@ -184,26 +195,48 @@ main #experiencesEnDev .xp a{
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative; /* Nécessaire pour que le pseudo-élément s'aligne correctement */
-    z-index: 1; /* Met l'élément au-dessus de son pseudo-élément */
-    overflow: hidden; /* Pour éviter que le pseudo-élément dépasse */
+    position: relative; 
+    z-index: 1; 
+    overflow: hidden; 
     background: rgba(255, 255, 255, 0.21);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    
+}
+
+main #experiencesEnDev .xp a::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     backdrop-filter: blur(9.3px);
     -webkit-backdrop-filter: blur(9.3px);
+    z-index: 0;
 }
 
 main #experiencesEnDev .xp .resume{
     grid-area: resume;
     font-size: 0.4rem;
-    position: relative; /* Nécessaire pour que le pseudo-élément s'aligne correctement */
-    z-index: 1; /* Met l'élément au-dessus de son pseudo-élément */
-    overflow: hidden; /* Pour éviter que le pseudo-élément dépasse */
+    position: relative; 
+    z-index: 1; 
+    overflow: hidden; 
     background: rgba(255, 255, 255, 0.21);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    
     padding: 5px;
+}
+
+main #experiencesEnDev .xp .resume::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(9.3px);
+    -webkit-backdrop-filter: blur(9.3px);
+    z-index: 0;
 }
 
 main #experiencesEnDev .xp img:hover,
@@ -224,7 +257,7 @@ main #experiencesEnDev .xp a::before{
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: -1; /* Place le pseudo-élément derrière le contenu */
+    z-index: -1; 
     background: rgba(34, 192, 195, 0.1);
 }
 
@@ -235,7 +268,7 @@ main #experiencesEnDev .xp .resume::before {
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: -1; /* Place le pseudo-élément derrière le contenu */
+    z-index: -1; 
     background: linear-gradient(164deg, rgba(34, 192, 195, 0.1) 0%, rgba(183, 129, 190, 0.1) 75%);
 }
 
@@ -284,9 +317,20 @@ footer {
     /* box-shadow: 8px 8px 20px #0000004d; */
     background: rgba(255, 255, 255, 0.16);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    position: relative;
+
+}
+
+footer::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     backdrop-filter: blur(9.3px);
     -webkit-backdrop-filter: blur(9.3px);
-
+    z-index: 0;
 }
 
 footer div{
@@ -301,6 +345,7 @@ footer div{
 footer div svg{
     width: 40px;
     height: 40px;
+    z-index: 2;
 }
 
 @media (max-width:360px) {
@@ -381,7 +426,7 @@ footer div svg{
         
     }
     
-    main #diplomes div span{
+    main #diplomes div #rncp{
         font-size: 2rem;
     }
 
@@ -509,7 +554,7 @@ footer div svg{
         margin-top: 0px;
     }
     
-    main #diplomes div span{
+    main #diplomes div #rncp{
         width: 20px;
         margin-top: 0px;
     }
