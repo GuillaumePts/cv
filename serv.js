@@ -5,9 +5,11 @@ const port = 9999;
 
 app.use(express.static(path.join(__dirname, 'public')));
 // Route principale qui renvoie le fichier HTML
+
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
+
 
 app.get('/download', (req, res) => {
   const filePath = path.join(__dirname, 'diplome.pdf');
