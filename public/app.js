@@ -13,16 +13,15 @@ setInterval(() => {
 const animatedDiv = document.querySelector('#content');
 
 window.addEventListener('deviceorientation', (event) => {
-    const beta = event.beta || 0;   // Inclinaison avant/arrière
-    const gamma = event.gamma || 0; // Inclinaison gauche/droite
-    const alpha = event.alpha || 0; // Rotation autour de l'axe Z
+    const beta = event.beta || 0;   
+    const gamma = event.gamma || 0; 
+    const alpha = event.alpha || 0; 
 
-    // Limiter les déplacements (entre -10px et 10px)
-    const transX = Math.min(Math.max(gamma, -10), 10); // Limite translation X
-    const transY = Math.min(Math.max(beta, -10), 10);  // Limite translation Y
-    const transZ = alpha * 0.1; // Optionnel : légère translation en profondeur
+    
+    const transX = Math.min(Math.max(gamma, -10), 10); 
+    const transY = Math.min(Math.max(beta, -10), 10);  
+    const transZ = alpha * 0.1; 
 
-    // Appliquer les translations pour centrer la div
     animatedDiv.style.transform = `translate(-50%, -50%) translateX(${transX}px) translateY(${transY}px) translateZ(${transZ}px)`;
 });
 
@@ -43,10 +42,9 @@ mailDiv.addEventListener('click', () => {
     const subject = 'Rendez-vous';
     const body = '';
     
-    // Construire le lien mailto
+    
     const mailtoLink = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     
-    // Redirection
     window.location.href = mailtoLink;
 });
 

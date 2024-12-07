@@ -138,10 +138,10 @@ main #diplomes{
     align-items: start;
     gap: 5px;
     font-size: 0.5rem;
-    margin-top: 10px;
+    /* margin-top: 0px; */
     position: absolute;
     right: 0;
-    top: 0px;
+    top: 20px;
     width: 80%;
 }
 
@@ -150,6 +150,10 @@ main #diplomes div #rncp{
     color: #333;
     text-align: center;
     text-decoration: none;
+}
+
+main #diplomes div #rncp:hover{
+    transform: scale(1.2);
 }
 
 main #experiencesEnDev{
@@ -240,12 +244,19 @@ main #experiencesEnDev .xp .resume::before{
 }
 
 main #experiencesEnDev .xp img:hover,
-main #experiencesEnDev .xp a:hover,
 main #experiencesEnDev .xp .resume:hover{
     transform: scale(1.4);
     z-index: 2;
     box-shadow: 0px 0px 20px 0px #00000085;
     background-color: #fff;
+}
+
+main #experiencesEnDev .xp a:hover{
+    transform: scale(1.4);
+    z-index: 2;
+    box-shadow: 0px 0px 20px 0px #00000085;
+    background-color: #000;
+    color: #fff;
 }
 
 
@@ -289,6 +300,13 @@ main #contact div{
     font-size: 0.5rem;
     gap: 5px;
 }
+
+main #contact div:hover{
+    cursor: pointer;
+}
+
+
+
 main #QuiSuisJe{
     width: 80%;
     display: flex;
@@ -300,7 +318,7 @@ main #QuiSuisJe{
 
 main #QuiSuisJe h2{
     font-size: 0.5rem;
-
+    
 }
 
 main #QuiSuisJe p{
