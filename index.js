@@ -1,28 +1,81 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-const port = 9999;
+const port = 3000;
+const session = require('express-session');
+require('dotenv').config();
+const nodemailer = require('nodemailer');
 
-app.use(express.static(path.join(__dirname, 'public')));
-// Route principale qui renvoie le fichier HTML
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
 });
 
 
+async function envoyerEmail(req) {
+  try {
+    const ip = req.ip; // Adresse IP de l'utilisateur
+    const userAgent = req.get('User-Agent'); // Informations sur le navigateur et l'OS
+    const referrer = req.get('Referrer'); // Page référente
+    const timestamp = new Date().toISOString(); // Horodatage de la visite
+
+    const info = await transporter.sendMail({
+      from: process.env.EMAIL_USER,    
+      to: 'guillaume.pitois1@gmail.com',   
+      subject: 'Quelqu\'un regarde ton cv !',    
+      text: `Ceci est un message texte. 
+      Informations de la visite :
+      - IP: ${ip}
+      - User-Agent: ${userAgent}
+      - Referrer: ${referrer || 'Aucun'}
+      - Date et heure de la visite: ${timestamp}`,
+      html: `<b>Ceci est un message HTML</b>
+      <p>Informations de la visite :</p>
+      <ul>
+        <li><b>IP</b>: ${ip}</li>
+        <li><b>User-Agent</b>: ${userAgent}</li>
+        <li><b>Referrer</b>: ${referrer || 'Aucun'}</li>
+        <li><b>Date et heure</b>: ${timestamp}</li>
+      </ul>`
+    });
+
+    console.log('Email envoyé : %s', info.messageId);
+  } catch (err) {
+    console.error('Erreur lors de l\'envoi de l\'email :', err);
+  }
+}
+
+// Route principale
+app.get('/', async (req, res) => {
+  try {
+    await envoyerEmail(); 
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  } catch (err) {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  }
+  
+});
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+
+// Route pour le téléchargement de fichier
 app.get('/download', (req, res) => {
   const filePath = path.join(__dirname, 'diplome.pdf');
   res.download(filePath, 'diplome.pdf', (err) => {
-      if (err) {
-          console.error('Erreur lors du téléchargement :', err);
-          res.status(500).send('Erreur lors du téléchargement.');
-      }
+    if (err) {
+      console.error('Erreur lors du téléchargement :', err);
+      res.status(500).send('Erreur lors du téléchargement.');
+    }
   });
 });
 
-
-// Démarrer le serveur
+// Lancement du serveur
 app.listen(port, () => {
   console.log(`Serveur démarré sur http://localhost:${port}`);
 });
