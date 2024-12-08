@@ -19,9 +19,6 @@ const transporter = nodemailer.createTransport({
 
 async function envoyerEmail(req) {
   try {
-    const ip = req.ip; // Adresse IP de l'utilisateur
-    const userAgent = req.get('User-Agent'); // Informations sur le navigateur et l'OS
-    const referrer = req.get('Referrer'); // Page référente
     const timestamp = new Date().toISOString(); // Horodatage de la visite
 
     const info = await transporter.sendMail({
@@ -30,16 +27,10 @@ async function envoyerEmail(req) {
       subject: 'Quelqu\'un regarde ton cv !',    
       text: `Ceci est un message texte. 
       Informations de la visite :
-      - IP: ${ip}
-      - User-Agent: ${userAgent}
-      - Referrer: ${referrer || 'Aucun'}
       - Date et heure de la visite: ${timestamp}`,
       html: `<b>Ceci est un message HTML</b>
       <p>Informations de la visite :</p>
       <ul>
-        <li><b>IP</b>: ${ip}</li>
-        <li><b>User-Agent</b>: ${userAgent}</li>
-        <li><b>Referrer</b>: ${referrer || 'Aucun'}</li>
         <li><b>Date et heure</b>: ${timestamp}</li>
       </ul>`
     });
