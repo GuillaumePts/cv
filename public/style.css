@@ -40,7 +40,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 120vh;
+    height: 100vh;
     position: relative;
 }
 

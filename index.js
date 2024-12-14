@@ -2,24 +2,28 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const port = 3000;
-const session = require('express-session');
+const axios = require('axios');
+const bodyParser = require('body-parser');
 require('dotenv').config();
 const nodemailer = require('nodemailer');
+const RECAPTCHA_SECRET = process.env.RECAPTCHA_SECRET;
 
 
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
 
 
-async function envoyerEmail(req) {
+async function envoyerEmail() {
+
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
+
   try {
-    const timestamp = new Date().toISOString(); // Horodatage de la visite
+    const timestamp = new Date().toISOString(); 
 
     const info = await transporter.sendMail({
       from: process.env.EMAIL_USER,    
@@ -41,18 +45,49 @@ async function envoyerEmail(req) {
   }
 }
 
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
 // Route principale
-app.get('/', async (req, res) => {
-  try {
-    await envoyerEmail(); 
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-  } catch (err) {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-  }
-  
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'captcha.html'));
 });
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Route pour valider le CAPTCHA
+app.post('/validate-captcha', async (req, res) => {
+  const captchaResponse = req.body['g-recaptcha-response'];
+
+  if (!captchaResponse) {
+    return res.status(400).send('CAPTCHA non rempli.');
+  }
+
+  try {
+    
+    const verification = await axios.post(
+      'https://www.google.com/recaptcha/api/siteverify',
+      null,
+      {
+        params: {
+          secret: RECAPTCHA_SECRET,
+          response: captchaResponse,
+        },
+      }
+    );
+
+    if (verification.data.success) {
+      envoyerEmail()
+      res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    } else {
+      res.status(400).send('CAPTCHA invalide.');
+    }
+  } catch (err) {
+    console.error('Erreur lors de la validation du CAPTCHA :', err);
+    res.status(500).send('Erreur serveur.');
+  }
+});
+
 
 
 // Route pour le téléchargement de fichier
